@@ -23,6 +23,7 @@ import { Nullable, toNullable, toNullableDate } from "../util/null";
 import Collection from "./Collection";
 import { Client } from "..";
 import { decodeTime } from "ulid";
+export type MessageII = MessageI & { pinned?: boolean | null };
 
 export class Message {
     client: Client;
@@ -32,7 +33,7 @@ export class Message {
     channel_id: string;
     author_id: string;
     webhook?: { name: string; avatar?: string };
-
+    is_pinned: Nullable<boolean>;
     content: Nullable<string>;
     system: Nullable<SystemMessage>;
     attachments: Nullable<File[]>;
@@ -166,14 +167,14 @@ export class Message {
         }
     }
 
-    constructor(client: Client, data: MessageI) {
+    constructor(client: Client, data: MessageII) {
         this.client = client;
         this._id = data._id;
         this.nonce = data.nonce ?? undefined;
         this.channel_id = data.channel;
         this.author_id = data.author;
         this.webhook = toNullable((data as any).webhook);
-
+        this.is_pinned = (data.pinned as boolean) == undefined ? false : true;
         this.content = toNullable(data.content);
         this.system = toNullable(data.system);
         this.attachments = toNullable(data.attachments);
