@@ -513,9 +513,10 @@ export class Channel {
         const data = (await this.client.api.get(
             `/channels/${this._id as ""}/messages`,
             { ...params, include_users: true },
-        )) as { messages: MessageI[]; users: User[]; members?: Member[] };
+        )) as { messages: MessageI[]; users: User[]; pinned_messages: MessageI[] ;members?: Member[] };
         return runInAction(() => {
             return {
+                pinned_messages: data.pinned_messages.map(this.client.pinned_messages.createObj),
                 messages: data.messages.map(this.client.messages.createObj),
                 users: data.users.map(this.client.users.createObj),
                 members: data.members?.map(this.client.members.createObj),

@@ -153,6 +153,7 @@ export class Client extends EventEmitter {
     servers: Servers;
     members: Members;
     messages: Messages;
+    pinned_messages: Messages;
     bots: Bots;
     emojis: Emojis;
 
@@ -166,6 +167,7 @@ export class Client extends EventEmitter {
         this.servers = new Servers(this);
         this.members = new Members(this);
         this.messages = new Messages(this);
+        this.pinned_messages = new Messages(this);
         this.bots = new Bots(this);
         this.emojis = new Emojis(this);
 
@@ -178,6 +180,7 @@ export class Client extends EventEmitter {
                 servers: observable,
                 members: observable,
                 messages: observable,
+                pinned_messages: observable,
                 emojis: observable,
                 reset: action,
             },
@@ -449,6 +452,7 @@ export class Client extends EventEmitter {
         this.servers = new Servers(this);
         this.members = new Members(this);
         this.messages = new Messages(this);
+        this.pinned_messages = new Messages(this);
         this.emojis = new Emojis(this);
     }
 
