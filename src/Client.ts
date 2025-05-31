@@ -117,7 +117,7 @@ export declare interface Client {
 /**
  * Regular expression for mentions.
  */
-export const RE_MENTIONS = /<@([A-z0-9]{26})>/g;
+export const RE_MENTIONS = /<@([A-z0-9]{26}|everyone)>/g;
 
 /**
  * Regular expression for spoilers.
@@ -473,12 +473,17 @@ export class Client extends EventEmitter {
     markdownToText(source: string) {
         return source
             .replace(RE_MENTIONS, (sub: string, id: string) => {
+                // Handle both user mentions and @everyone mentions
+                if (id === "everyone") {
+                    return "@everyone";
+                }
+                
                 const user = this.users.get(id as string);
-
+    
                 if (user) {
                     return `${user.display_name ?? user.username}`;
                 }
-
+    
                 return sub;
             })
             .replace(RE_SPOILER, "<spoiler>");

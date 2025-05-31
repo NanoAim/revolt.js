@@ -83,7 +83,9 @@ export const Permission = {
     MoveMembers: 2 ** 35,
 
     // * Misc. permissions
-    // % Bits 36 to 52: free area
+    /// Allow users to mention everyone in a channel
+    MentionEveryone: 2 ** 36,
+    // % Bits 37 to 52: free area
     // % Bits 53 to 64: do not use
 
     // * Grant all permissions
